@@ -15,7 +15,8 @@
     !     ####################################################################################################
     !      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     !      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    SUBROUTINE FLUVIAL_DETACHMENT(MAXCHAN,MAXREG,NOMINAL_CRITICAL_SHEAR,LOCAL_BEDROCK_ERODIBILITY)
+SUBROUTINE FLUVIAL_DETACHMENT(MAXCHAN,MAXREG,NOMINAL_CRITICAL_SHEAR,LOCAL_BEDROCK_ERODIBILITY)
+        USE ieee_arithmetic
         USE ERODE_GLOBALS, FLUVIAL_TIMESTEP_FACTOR=>CFN
         IMPLICIT NONE
         INTEGER(4) :: I,J,NNN
@@ -186,6 +187,7 @@
     !      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     !      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     SUBROUTINE DO_THE_EROSION()
+        USE ieee_arithmetic
         USE ERODE_GLOBALS, CHANNEL_STATE_CHANGE=>IDO, CHANNEL_EROSION_RATE=>CFNE,  &
         NET_EROSION_RATE=>CFNW,SED_FLUX_DIVERGENCE=>CFW, SED_SURFACE_ELEVATION=>CFN
         USE SEDDEBUG_GLOBALS
@@ -541,7 +543,7 @@
                                     !      *********************************************************************
                                     NEWS2=NEWS2+S2*TIME_INCREMENT
                                     NEWS1=NEWS1+S1*TIME_INCREMENT
-                                    IF (ISNAN(NEWS2).OR.ISNAN(NEWS1)) THEN
+                                    IF (ieee_is_nan(NEWS2).OR.ieee_is_nan(NEWS1)) THEN
                                         WRITE(OUTHIST,8432) I,J,NEWS1,NEWS2,S1,S2 &
                                         ,TIME_INCREMENT,SEDIMENT_YIELD(I,J),SEDBIAS
                                         WRITE(*,8432) I,J,NEWS1,NEWS2,S1,S2 &
@@ -1042,7 +1044,7 @@
                 SEDIMENT_FRACTION=SEDIMENT_FRACTION/(MX*MY)
                 WRITE(OUTHIST,734)SEDIMENT_FRACTION
             ENDIF
-            IF (ISNAN(NEWS2).OR.ISNAN(NEWS1)) THEN
+            IF (ieee_is_nan(NEWS2).OR.ieee_is_nan(NEWS1)) THEN
                 WRITE(OUTHIST,8332) I,J,NEWS1,NEWS2,S1,S2 &
                 ,TIME_INCREMENT,SEDIMENT_YIELD(I,J),SEDBIAS
                 WRITE(*,8332) I,J,NEWS1,NEWS2,S1,S2 &

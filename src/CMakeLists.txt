@@ -1,10 +1,10 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.17)
 
-enable_language (Fortran)
+#enable_language (Fortran)
 set (MODEL marssim)
 set (BUILD_SHARED_LIBS ON)
 
-set (CMAKE_Fortran_FLAGS -ffree-line-length-none)
+#set (CMAKE_Fortran_FLAGS -ffree-line-length-none)
 
 set (marssim_srcs
      program_global_variables.f90
